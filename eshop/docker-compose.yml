@@ -3,21 +3,30 @@ services:
     image: gvenzl/oracle-xe:21.3.0
     container_name: eshop-oracle-xe
     ports:
-      - "1521:1521"   # Puerto SQL*Net
-      - "5500:5500"   # Oracle EM Express
+      - "1521:1521" 
+      - "5500:5500"
     environment:
       ORACLE_PASSWORD: MiPasswordSeguro
     volumes:
-      - eshop-oracle-xe-vol:/opt/oracle/oradata
+      - oracle-xe-vol:/opt/oracle/oradata
       - ./01_create_user.sql:/docker-entrypoint-initdb.d/01_create_user.sql
       - ./02_create_schema.sql:/docker-entrypoint-initdb.d/02_create_schema.sql
     restart: always
     networks:
-      - eshop-oracle-xe-net
+      - eshop-net
+  eshop-api:
+    image: mgalicianegrete/eshop-api:latests
+    environment:
+    ports:
+      - "5000:8080"
+    depends_on:
+      - oracle-xe
+    networks:
+      - eshop-net
 
 volumes:
-  eshop-oracle-xe-vol:
+  oracle-xe-vol:
 
 networks:
-  eshop-oracle-xe-net:
+  eshop-net:
     driver: bridge
