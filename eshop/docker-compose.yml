@@ -17,6 +17,7 @@ services:
   eshop-api:
     image: mgalicianegrete/eshop-api:latests
     environment:
+      - ConnectionStrings__EShop=${DB_CONNECTION_ESHOP}
     ports:
       - "5000:8080"
     depends_on:
