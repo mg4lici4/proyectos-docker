@@ -15,7 +15,7 @@ services:
     networks:
       - eshop-net
   eshop-api:
-    image: mgalicianegrete/eshop-api:latests
+    image: mgalicianegrete/eshop-api:latest
     environment:
       - ConnectionStrings__EShop=${DB_CONNECTION_ESHOP}
     ports:
@@ -24,7 +24,21 @@ services:
       - oracle-xe
     networks:
       - eshop-net
-
+  eshop-app:
+    image: mgalicianegrete/eshop-app:latest
+    environment:
+      - LOGIN=http://localhost:8080/api/v1/eshop/Login
+      - PERSONA_REGISTRO=http://localhost:8080/api/v1/eshop/Persona
+      - USUARIO_REGISTRAR=http://localhost:8080/api/v1/eshop/Usuario
+      - USUARIO_SEGUNDOFA_GENERAR=http://localhost:8080/api/v1/eshop/Usuario/segundofa
+      - USUARIO_SEGUNDOFA_ACTIVAR=http://localhost:8080/api/v1/eshop/Usuario/segundofa/activar
+      - FEATURE_FLAG=true
+    ports:
+      - "8080:80"
+    depends_on:
+      - oracle-xe
+    networks:
+      - eshop-net
 volumes:
   oracle-xe-vol:
 
