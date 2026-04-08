@@ -14,6 +14,11 @@ services:
     restart: always
     networks:
       - eshop-net
+    healthcheck:
+      test: ["CMD", "tnsping", "XEPDB1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
   eshop-api:
     image: mgalicianegrete/eshop-api:latest
     environment:
@@ -22,6 +27,16 @@ services:
       - "5000:8080"
     depends_on:
       - oracle-xe
+    networks:
+      - eshop-net
+  eshop-worker:
+    image: mgalicianegrete/eshop-worker:latest
+    environment:
+      - ConnectionStrings__EShop=${DB_CONNECTION_ESHOP}
+    depends_on:
+      oracle-xe:
+        condition: service_healthy
+
     networks:
       - eshop-net
   eshop-app:
