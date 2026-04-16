@@ -14,11 +14,18 @@ services:
     restart: always
     networks:
       - eshop-net
+
     healthcheck:
-      test: ["CMD", "tnsping", "XEPDB1"]
+      test:
+        [
+          "CMD-SHELL",
+          "echo \"SELECT 1 FROM dual;\" | sqlplus -s system/$${ORACLE_PASSWORD}@localhost/XEPDB1 || exit 1"
+        ]
       interval: 30s
       timeout: 10s
-      retries: 5
+      retries: 20
+      start_period: 5m
+
   eshop-api:
     image: mgalicianegrete/eshop-api:latest
     environment:
