@@ -27,9 +27,13 @@ services:
       start_period: 5m
 
   eshop-api:
-    image: mgalicianegrete/eshop-api:latest
+    image: mgalicianegrete/eshop-api:preview
     environment:
-      - ConnectionStrings__EShop=${DB_CONNECTION_ESHOP}
+      - ConnectionStrings__EShop_API=${ESHOP_API_DB_CONNECTION}      
+      - EShop__Api__JWTSettings__Llave=${ESHOP_API_JWT_KEY}
+      - EShop__Api__JWTSettings__VigenciaEnMinutos=3
+      - EShop__Api__JWTSettings__Audiencia=usuarios
+      - EShop__Api__JWTSettings__Emisor=mgalician
     ports:
       - "5000:8080"
     depends_on:
@@ -37,9 +41,9 @@ services:
     networks:
       - eshop-net
   eshop-worker:
-    image: mgalicianegrete/eshop-worker:latest
+    image: mgalicianegrete/eshop-worker:preview
     environment:
-      - ConnectionStrings__EShop=${DB_CONNECTION_ESHOP}
+      - ConnectionStrings__EShop_Worker=${ESHOP_WORKER_DB_CONNECTION}
     depends_on:
       oracle-xe:
         condition: service_healthy
