@@ -51,9 +51,10 @@ services:
     networks:
       - eshop-net
   eshop-app:
-    image: mgalicianegrete/eshop-app:latest
+    image: mgalicianegrete/eshop-app:preview
     environment:
-      - LOGIN=http://localhost:8080/api/v1/eshop/Login
+      - LOGIN_USERNAME=http://localhost:8080/api/v1/eshop/Login/username
+      - LOGIN_2FA=http://localhost:8080/api/v1/eshop/Login/2fa
       - PERSONA_REGISTRO=http://localhost:8080/api/v1/eshop/Persona
       - USUARIO_REGISTRAR=http://localhost:8080/api/v1/eshop/Usuario
       - USUARIO_SEGUNDOFA_GENERAR=http://localhost:8080/api/v1/eshop/Usuario/segundofa
