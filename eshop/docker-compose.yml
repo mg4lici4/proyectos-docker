@@ -31,7 +31,7 @@ services:
     environment:
       - ConnectionStrings__EShop_API=${ESHOP_API_DB_CONNECTION}      
       - EShop__Api__JWTSettings__Llave=${ESHOP_API_JWT_KEY}
-      - EShop__Api__JWTSettings__VigenciaEnMinutos=3
+      - EShop__Api__JWTSettings__VigenciaEnMinutos=10
       - EShop__Api__JWTSettings__Audiencia=usuarios
       - EShop__Api__JWTSettings__Emisor=mgalician
     ports:
@@ -55,6 +55,7 @@ services:
     environment:
       - LOGIN_USERNAME=http://localhost:8080/api/v1/eshop/Login/username
       - LOGIN_2FA=http://localhost:8080/api/v1/eshop/Login/2fa
+      - SESION_CERRAR=http://localhost:8080/api/v1/eshop/Sesion/cerrar
       - PERSONA_REGISTRO=http://localhost:8080/api/v1/eshop/Persona
       - USUARIO_REGISTRAR=http://localhost:8080/api/v1/eshop/Usuario
       - USUARIO_SEGUNDOFA_GENERAR=http://localhost:8080/api/v1/eshop/Usuario/segundofa
